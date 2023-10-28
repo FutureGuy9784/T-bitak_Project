@@ -46,7 +46,6 @@
   </div>
 
 
-  
   <script>
     function speakText() {
         const content = document.getElementById('content').textContent;
@@ -54,7 +53,13 @@
 
         speech.text = content;
         speech.lang = 'tr-TR'; // Turkish (Turkey)
-        speech.rate = 0.8; // Adjust rate as needed
+
+        // Adjust the speech rate dynamically based on text length
+        if (content.length < 2) {
+            speech.rate = 1.0; // Faster rate for short text
+        } else {
+            speech.rate = 0.9; // Slower rate for longer text
+        }
 
         // Fetch available voices
         let voices = window.speechSynthesis.getVoices();
@@ -67,9 +72,11 @@
 
         window.speechSynthesis.speak(speech);
     }
+
+    window.onload = speakText;
 </script>
 
-   <center><button style="width: 150px; height: 50px;" onclick="speakText()">Dinlemek için bas</button></center>
+   <center><button  onclick="speakText()">Dinlemek için bas</button></center>
 
 </body>
 </html>
