@@ -56,14 +56,18 @@
         speech.text = content;
         speech.lang = 'tr-TR'; // Turkish (Turkey)
 
-        // Lower the speech rate (adjust the rate value as needed)
-        speech.rate = 0.9; // You can adjust this value to slow down or speed up the speech
+        // Adjust the speech rate dynamically based on text length
+        if (content.length < 10) {
+            speech.rate = 1.0; // Faster rate for short text
+        } else {
+            speech.rate = 0.7; // Slower rate for longer text
+        }
 
         // Fetch available voices
         let voices = window.speechSynthesis.getVoices();
 
         // Filter for Turkish female voice if available
-        let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'male');
+        let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
 
         // If a female Turkish voice is found, use it, else use the default voice
         speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
