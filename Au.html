@@ -58,7 +58,7 @@
 
         // Adjust the speech rate dynamically based on text length
         if (content.length < 2) {
-            speech.rate = 1.0; // Faster rate for short text
+            speech.rate = 0.1; // Faster rate for short text
         } else {
             speech.rate = 0.7; // Slower rate for longer text
         }
