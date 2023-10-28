@@ -49,20 +49,23 @@
 
 
   <script>
-      // Function to speak the content
-      function speakText() {
-          const content = document.getElementById('content').textContent;
-          
-          // Create a speech synthesis object
-          const speech = new SpeechSynthesisUtterance();
-          speech.text = content;
+    // Function to speak the content
+    function speakText() {
+        const content = document.getElementById('content').textContent;
+        
+        // Create a speech synthesis object
+        const speech = new SpeechSynthesisUtterance();
+        speech.text = content;
+        
+        // Set the language to Turkish
+        speech.lang = 'tr-TR'; // Turkish (Turkey)
 
-          // Use the browser's speech synthesis to speak
-          window.speechSynthesis.speak(speech);
-      }
+        // Use the browser's speech synthesis to speak
+        window.speechSynthesis.speak(speech);
+    }
 
-      // Speak the content when the page loads
-      window.onload = speakText;
-  </script>
+    // Speak the content when the page loads
+    window.onload = speakText;
+</script>
 </body>
 </html>
