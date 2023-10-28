@@ -46,5 +46,23 @@
         Bilgisayarlarda, uzay araçlarında, elektronik cihazlarda ve uçak motorlarında kullanılır.</TT>
     <TT style="color:black;font-size:20px;">Nano ölçekteki altın parçacıkları endüstride katalizör (kimyasal tepkimelerin daha hızlı gerçekleşmesini sağlayan ancak kendisi tepkimede harcanmayan maddeler) olarak kullanılır.</TT>
   </div>
+  <p id="content">This text will be read aloud.</p>
+
+  <script>
+      // Function to speak the content
+      function speakText() {
+          const content = document.getElementById('content').textContent;
+          
+          // Create a speech synthesis object
+          const speech = new SpeechSynthesisUtterance();
+          speech.text = content;
+
+          // Use the browser's speech synthesis to speak
+          window.speechSynthesis.speak(speech);
+      }
+
+      // Speak the content when the page loads
+      window.onload = speakText;
+  </script>
 </body>
 </html>
