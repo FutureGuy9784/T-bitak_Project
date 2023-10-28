@@ -57,8 +57,8 @@
         speech.lang = 'tr-TR'; // Turkish (Turkey)
 
         // Adjust the speech rate dynamically based on text length
-        if (content.length < 10) {
-            speech.rate = 0.5; // Faster rate for short text
+        if (content.length < 2) {
+            speech.rate = 1.0; // Faster rate for short text
         } else {
             speech.rate = 0.7; // Slower rate for longer text
         }
