@@ -48,23 +48,27 @@
   </div>
 
 
+
   <script>
-    // Function to speak the content
     function speakText() {
         const content = document.getElementById('content').textContent;
-        
-        // Create a speech synthesis object
         const speech = new SpeechSynthesisUtterance();
-        speech.text = content;
-        
-        // Set the language to Turkish
-        speech.lang = 'tr-TR'; // Turkish (Turkey)
 
-        // Use the browser's speech synthesis to speak
+        speech.text = content;
+        speech.lang = 'tr-TR'; // Turkish (Turkey)
+        
+        // Fetch available voices
+        let voices = window.speechSynthesis.getVoices();
+        
+        // Filter for Turkish female voice if available
+        let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
+
+        // If a female Turkish voice is found, use it, else use the default voice
+        speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
+
         window.speechSynthesis.speak(speech);
     }
 
-    // Speak the content when the page loads
     window.onload = speakText;
 </script>
 </body>
