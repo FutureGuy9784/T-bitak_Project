@@ -48,7 +48,6 @@
   </div>
 
 
-
   <script>
     function speakText() {
         const content = document.getElementById('content').textContent;
@@ -56,10 +55,13 @@
 
         speech.text = content;
         speech.lang = 'tr-TR'; // Turkish (Turkey)
-        
+
+        // Lower the speech rate (adjust the rate value as needed)
+        speech.rate = 0.8; // You can adjust this value to slow down or speed up the speech
+
         // Fetch available voices
         let voices = window.speechSynthesis.getVoices();
-        
+
         // Filter for Turkish female voice if available
         let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
 
