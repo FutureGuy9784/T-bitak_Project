@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Altın|Periyodik Tablo</title>
+<style>
+    div.periodic {
+      text-align: center;
+    }
+    
+    ul.myUL {
+      display: inline-block;
+      text-align: left;
+    }
+    </style>
+</head>
+<body style="background-color:#272423;">
+
+<div class="periodic" id="content">
+    <TT style="color:black;font-size:25px;">Altın(Au)</TT>
+    <br><br>
+    <img src="img/Neon.png" alt="Au(Altın)">
+    <br><br>
+    <TT style="color:black;font-size:20px;">Altın, periyodik tablonun 6. periyodunun 11. grubunda yer alan bir elementtir. Altının atom numarası 79'dur. Altın, Au sembolü ile gösterilir ve metaldir.</TT>
+    <br><br>
+    <TT style="color:black;font-size:30px;">Altının Tarihçesi ve Kullanım Alanları </TT>
+    <br>
+    <TT style="color:black;font-size:30px;">Altının simgesi (Au) Latincede “altın” anlamına gelen aurum kelimesine dayanır.</TT>
+    <br>
+    <TT style="color:black;font-size:30px;">Sarı renkte bir metaldir.</TT>
+    <br>
+    <TT style="color:black;font-size:30px;">Dövülerek kolayca şekillendirilebilir.</TT>
+    <br><br>
+    <TT style="color:black;font-size:20px;">
+        Altının insanlar tarafından çok eski zamanlardan beri kullanıldığı biliniyor.
+        MÖ 1323’te ölen firavun Tutankamon’unmezarından çıkan maske altından yapılmıştı.
+        Altın paralar ilk defa Anadolu’da Lidyalılar tarafından basıldı.
+        Altın uluslararası bir ödeme aracı olarak hâlen kullanılıyor.
+    </TT>
+    <br><br>
+    <TT style="color:black;font-size:30px;">Çok eski zamanlardan beri insanlar tarafından süs eşyası olarak kullanılıyor.</TT>
+    <br><br>
+    <TT style="color:black;font-size:20px;">Tepkimeye girmeye isteksiz bir element olduğundan korozyona (kimyasal olarak aşınmaya)
+        karşı dirençli olması ve elektriği iyi iletmesi nedeniyle 20. yüzyılın sonundan itibaren endüstride kullanılmaya başlandı. 
+        Bilgisayarlarda, uzay araçlarında, elektronik cihazlarda ve uçak motorlarında kullanılır.</TT>
+    <TT style="color:black;font-size:20px;">Nano ölçekteki altın parçacıkları endüstride katalizör (kimyasal tepkimelerin daha hızlı gerçekleşmesini sağlayan ancak kendisi tepkimede harcanmayan maddeler) olarak kullanılır.</TT>
+  </div>
+
+
+  <script>
+    function speakText() {
+        const content = document.getElementById('content').textContent;
+        const speech = new SpeechSynthesisUtterance();
+
+        speech.text = content;
+        speech.lang = 'tr-TR'; // Turkish (Turkey)
+
+        // Adjust the speech rate dynamically based on text length
+        if (content.length < 2) {
+            speech.rate = 1.0; // Faster rate for short text
+        } else {
+            speech.rate = 0.9; // Slower rate for longer text
+        }
+
+        // Fetch available voices
+        let voices = window.speechSynthesis.getVoices();
+
+        // Filter for Turkish female voice if available
+        let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
+
+        // If a female Turkish voice is found, use it, else use the default voice
+        speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
+
+        window.speechSynthesis.speak(speech);
+    }
+
+    window.onload = speakText;
+</script>
+
+   <center><button style="height: 50px; width: 150px;" onclick="speakText()">Dinlemek için bas</button></center>
+
+</body>
+</html>
