@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoplay Speech</title>
+    <title>QR Kod Okuma ve Sesli Okuma</title>
     <style>
         div.autoplay {
             text-align: center;
@@ -18,6 +18,7 @@
         </p>
     </div>
 
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
     <script>
         function autoplaySpeech() {
             const content = document.getElementById('content').textContent;
@@ -45,7 +46,47 @@
             window.speechSynthesis.speak(speech);
         }
 
-        window.onload = autoplaySpeech;
+        function handleQRCodeResult(result) {
+            if (result) {
+                autoplaySpeech();
+            } else {
+                alert("QR kod okunamadı veya içerik boş.");
+            }
+        }
+
+        // QR kod okuma işlemi
+        function readQRCode() {
+            const video = document.createElement("video");
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.setAttribute("playsinline", true); // Android için gerekli
+                    video.play();
+                    requestAnimationFrame(tick);
+                });
+
+            function tick() {
+                if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+                    if (code) {
+                        handleQRCodeResult(code.data);
+                    }
+
+                }
+                requestAnimationFrame(tick);
+            }
+        }
+
+        // QR kod okuma başlatma
+        readQRCode();
     </script>
 
 </body>
