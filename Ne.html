@@ -1,14 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otomatik Okuma</title>
+    <title>Autoplay Speech</title>
+    <style>
+        div.autoplay {
+            text-align: center;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color:#FFB000;">
 
-    <p id="otomatikParagraf">Bu paragraf otomatik olarak görüntüleniyor!</p>
+    <div class="autoplay" id="content">
+        <p style="color:black;font-size:20px;">
+            Bu paragraf otomatik olarak okunuyor.
+        </p>
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        function autoplaySpeech() {
+            const content = document.getElementById('content').textContent;
+            const speech = new SpeechSynthesisUtterance();
+
+            speech.text = content;
+            speech.lang = 'tr-TR'; // Turkish (Turkey)
+
+            // Adjust the speech rate dynamically based on text length
+            if (content.length < 50) {
+                speech.rate = 1.0; // Faster rate for short text
+            } else {
+                speech.rate = 0.9; // Slower rate for longer text
+            }
+
+            // Fetch available voices
+            let voices = window.speechSynthesis.getVoices();
+
+            // Filter for Turkish female voice if available
+            let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
+
+            // If a female Turkish voice is found, use it, else use the default voice
+            speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
+
+            window.speechSynthesis.speak(speech);
+        }
+
+        window.onload = autoplaySpeech;
+    </script>
+
 </body>
 </html>
