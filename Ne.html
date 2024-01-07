@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Kod Otomatik Sesli Okuma</title>
+    <title>QR Kod Okuma ve Sesli Okuma</title>
     <style>
         div.autoplay {
             text-align: center;
         }
     </style>
 </head>
-<body style="background-color:#FFB000;">
+<body style="background-color:white;">
 
     <div class="autoplay" id="content">
         <p style="color:black;font-size:20px;">
@@ -41,7 +41,8 @@
 
         function handleQRCodeResult(result) {
             if (result) {
-                autoplaySpeech("QR kodu okundu. Şimdi içerik sesli olarak okunuyor.");
+                // QR kod içeriğini aldık, şimdi o URL'yi açalım
+                window.location.href = result;
             } else {
                 alert("QR kod okunamadı veya içerik boş.");
             }
@@ -70,6 +71,7 @@
 
                     if (code) {
                         handleQRCodeResult(code.data);
+                        autoplaySpeech("QR kodu okundu. Şimdi içerik sesli olarak okunuyor.");
                     }
                 }
                 requestAnimationFrame(tick);
