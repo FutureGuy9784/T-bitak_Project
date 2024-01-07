@@ -20,27 +20,20 @@
 
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
     <script>
-        function autoplaySpeech() {
-            const content = document.getElementById('content').textContent;
+        function autoplaySpeech(content) {
             const speech = new SpeechSynthesisUtterance();
 
             speech.text = content;
             speech.lang = 'tr-TR'; // Turkish (Turkey)
 
-            // Adjust the speech rate dynamically based on text length
             if (content.length < 50) {
-                speech.rate = 1.0; // Faster rate for short text
+                speech.rate = 1.0;
             } else {
-                speech.rate = 0.9; // Slower rate for longer text
+                speech.rate = 0.9;
             }
 
-            // Fetch available voices
             let voices = window.speechSynthesis.getVoices();
-
-            // Filter for Turkish female voice if available
             let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
-
-            // If a female Turkish voice is found, use it, else use the default voice
             speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
 
             window.speechSynthesis.speak(speech);
@@ -48,13 +41,12 @@
 
         function handleQRCodeResult(result) {
             if (result) {
-                autoplaySpeech();
+                window.location.href = result; // QR kod içeriğini alınan URL'ye yönlendir
             } else {
                 alert("QR kod okunamadı veya içerik boş.");
             }
         }
 
-        // QR kod okuma işlemi
         function readQRCode() {
             const video = document.createElement("video");
             const canvas = document.createElement("canvas");
@@ -63,7 +55,7 @@
             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
                 .then(stream => {
                     video.srcObject = stream;
-                    video.setAttribute("playsinline", true); // Android için gerekli
+                    video.setAttribute("playsinline", true);
                     video.play();
                     requestAnimationFrame(tick);
                 });
@@ -78,8 +70,8 @@
 
                     if (code) {
                         handleQRCodeResult(code.data);
+                        autoplaySpeech("QR kodu okundu. Şimdi içerik sesli olarak okunuyor.");
                     }
-
                 }
                 requestAnimationFrame(tick);
             }
