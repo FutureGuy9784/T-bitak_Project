@@ -42,7 +42,9 @@
     <br>
   </div>
 
-  <center><button style="height: 100px; width: 300px;" onclick="speakText()">Dinlemek için bas</button></center>
+  <center>
+    <button style="height: 100px; width: 300px;" onclick="speakText()">Dinlemek için bas</button>
+  </center>
 
   <script>
     function speakText() {
@@ -71,8 +73,17 @@
         window.speechSynthesis.speak(speech);
     }
 
-    window.onload = speakText;
+    window.onload = function () {
+        // Kontrol etmek için tarayıcının URL'sini al
+        const currentURL = window.location.href;
+
+        // Eğer tarayıcı URL'si belirli bir URL ile eşleşiyorsa speakText() fonksiyonunu çağır
+        if (currentURL === 'https://qr1.be/OUYD') {
+            speakText();
+        }
+    };
   </script>
 
 </body>
 </html>
+
