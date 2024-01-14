@@ -44,6 +44,8 @@
 
   <center>
     <button style="height: 100px; width: 300px;" onclick="speakText()">Dinlemek için bas</button>
+    <br>
+    <p id="voiceCommandInfo" style="color: white;">Sesli komut için: "Oku" veya "Dinle" deyin.</p>
   </center>
 
   <script>
@@ -81,9 +83,24 @@
         if (currentURL === 'https://qr1.be/OUYD') {
             speakText();
         }
+
+        // Sesli komutları kontrol et
+        const voiceCommandInfo = document.getElementById('voiceCommandInfo');
+        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+        recognition.lang = 'tr-TR'; // Türkçe tanıma için
+
+        recognition.onresult = function(event) {
+            const command = event.results[0][0].transcript.toLowerCase();
+            if (command === 'oku' || command === 'dinle') {
+                speakText();
+            }
+        };
+
+        voiceCommandInfo.addEventListener('click', function() {
+            recognition.start();
+        });
     };
   </script>
 
 </body>
 </html>
-
