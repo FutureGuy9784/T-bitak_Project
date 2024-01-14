@@ -1,88 +1,78 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Kod Okuma ve Sesli Okuma</title>
-    <style>
-        div.autoplay {
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neon | Periyodik Tablo</title>
+  <style>
+    div.periodic {
+      text-align: center;
+    }
+    
+    ul.myUL {
+      display: inline-block;
+      text-align: left;
+    }
+  </style>
 </head>
-<body style="background-color:white;">
+<body style="background-color:#272423;">
 
-    <div class="autoplay" id="content">
-        <p style="color:black;font-size:20px;">
-            Bu paragraf otomatik olarak okunuyor.
-        </p>
-    </div>
+  <div class="periodic" id="content">
+    <TT style="color:white;font-size:25px;">Neon(Ne)</TT>
+    <br><br>
+    <img src="img/Ne.png" alt="Ne(Neon)">
+    <br><br>
+    <TT style="color:white;font-size:20px;">Neon, periyodik tablonun 2. periyodunun 18. grubunda yer alan bir elementtir. Neonun atom numarası 10'dur. Neon, Ne sembolü ile gösterilir ve soy gazdır.</TT>
+    <TT style="color:white;font-size:30px;">Neonun Tarihçesi ve Kullanım Alanları </TT>
+    <br>
+    <br>
+    <TT style="color:white;font-size:30px;">Adını Yunancada “yeni” anlamına gelen neos kelimesinden alır. 1898’de Sir William Ramsay ve Morris Travers tarafından keşfedildi.
 
-    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
-    <script>
-        function autoplaySpeech(content) {
-            const speech = new SpeechSynthesisUtterance();
+        Doğada atmosferde ve kayaçların içinde hapsolmuş şekilde bulunur. Kararlı bir bileşiği yoktur.
+        
+        Kütle numaraları 21, 22 ve 23 olan üç doğal izotopu bulunur. Neon birden fazla izotopunun kararlı olduğu anlaşılan ilk elementtir.
+        
+        Zehirli değildir.
+        
+        En yaygın kullanımı reklam panolarındaki “neon ışıkları” şeklindedir. Vakumlanmış bir tüpe doldurulan neon kırmızımsı turuncu renkte ışık yayar. Yalnızca kırmızı renkli pano ışıklarında saf neon bulunur.
+        
+        Yıldırımsavarlarda, dalış ekipmanlarında ve lazerlerde kullanılır.
+        
+        Sıvı neon önemli soğutuculardandır. Sıvı hidrojenden üç kat, sıvı helyumdan ise kırk kat fazla soğutma kapasitesi vardır.</TT>
+    <br>
+  </div>
 
-            speech.text = content;
-            speech.lang = 'tr-TR'; // Turkish (Turkey)
+  <center><button style="height: 100px; width: 300px;" onclick="speakText()">Dinlemek için bas</button></center>
 
-            if (content.length < 50) {
-                speech.rate = 1.0;
-            } else {
-                speech.rate = 0.9;
-            }
+  <script>
+    function speakText() {
+        const content = document.getElementById('content').textContent;
+        const speech = new SpeechSynthesisUtterance();
 
-            let voices = window.speechSynthesis.getVoices();
-            let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'female');
-            speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
+        speech.text = content;
+        speech.lang = 'tr-TR'; // Turkish (Turkey)
 
-            window.speechSynthesis.speak(speech);
+        // Adjust the speech rate dynamically based on text length
+        if (content.length < 2) {
+            speech.rate = 1.0; // Faster rate for short text
+        } else {
+            speech.rate = 0.9; // Slower rate for longer text
         }
 
-        function handleQRCodeResult(result) {
-            if (result) {
-                // QR kod içeriğini aldık, şimdi o URL'yi açalım
-                window.location.href = result;
-            } else {
-                alert("QR kod okunamadı veya içerik boş.");
-            }
-        }
+        // Fetch available voices
+        let voices = window.speechSynthesis.getVoices();
 
-        function readQRCode() {
-            const video = document.createElement("video");
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
+        // Filter for Turkish female voice if available
+        let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'male');
 
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-                .then(stream => {
-                    video.srcObject = stream;
-                    video.setAttribute("playsinline", true);
-                    video.play();
-                    requestAnimationFrame(tick);
-                });
+        // If a female Turkish voice is found, use it, else use the default voice
+        speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
 
-            function tick() {
-                if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                    const code = jsQR(imageData.data, imageData.width, imageData.height);
+        window.speechSynthesis.speak(speech);
+    }
 
-                    if (code) {
-                        handleQRCodeResult(code.data);
-                        autoplaySpeech("QR kodu okundu. Şimdi içerik sesli olarak okunuyor.");
-                    }
-                }
-                requestAnimationFrame(tick);
-            }
-        }
-
-        // Sayfa yüklendiğinde QR kod okuma başlatma
-        window.onload = function() {
-            readQRCode();
-        };
-    </script>
+    window.onload = speakText;
+  </script>
 
 </body>
 </html>
