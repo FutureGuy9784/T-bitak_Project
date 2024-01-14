@@ -1,106 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neon | Periyodik Tablo</title>
-  <style>
-    div.periodic {
-      text-align: center;
-    }
-    
-    ul.myUL {
-      display: inline-block;
-      text-align: left;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kod Okuma ve Sesli Okuma</title>
 </head>
-<body style="background-color:#272423;">
+<body>
+    <!-- QR kodu tarayacak alan -->
+    <input type="file" accept="image/*" capture="camera" id="qrInput" style="display:none">
 
-  <div class="periodic" id="content">
-    <TT style="color:white;font-size:25px;">Neon(Ne)</TT>
-    <br><br>
-    <img src="img/Ne.png" alt="Ne(Neon)">
-    <br><br>
-    <TT style="color:white;font-size:20px;">Neon, periyodik tablonun 2. periyodunun 18. grubunda yer alan bir elementtir. Neonun atom numarası 10'dur. Neon, Ne sembolü ile gösterilir ve soy gazdır.</TT>
-    <TT style="color:white;font-size:30px;">Neonun Tarihçesi ve Kullanım Alanları </TT>
-    <br>
-    <br>
-    <TT style="color:white;font-size:30px;">Adını Yunancada “yeni” anlamına gelen neos kelimesinden alır. 1898’de Sir William Ramsay ve Morris Travers tarafından keşfedildi.
+    <script>
+        // QR kodu tarayacak fonksiyon
+        function readQRCode(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imageUrl = e.target.result;
+                    // Burada QR kodu okuma işlemini gerçekleştirecek bir kütüphane kullanılabilir.
+                    // Örneğin: https://github.com/cozmo/jsQR
+                    // Ancak, bu örnekte QR kod okuma kısmını basitleştirmek için kullanılmadı.
+                    // İlerleyen aşamada bu kısmı ihtiyacınıza uygun bir şekilde güncelleyebilirsiniz.
 
-        Doğada atmosferde ve kayaçların içinde hapsolmuş şekilde bulunur. Kararlı bir bileşiği yoktur.
-        
-        Kütle numaraları 21, 22 ve 23 olan üç doğal izotopu bulunur. Neon birden fazla izotopunun kararlı olduğu anlaşılan ilk elementtir.
-        
-        Zehirli değildir.
-        
-        En yaygın kullanımı reklam panolarındaki “neon ışıkları” şeklindedir. Vakumlanmış bir tüpe doldurulan neon kırmızımsı turuncu renkte ışık yayar. Yalnızca kırmızı renkli pano ışıklarında saf neon bulunur.
-        
-        Yıldırımsavarlarda, dalış ekipmanlarında ve lazerlerde kullanılır.
-        
-        Sıvı neon önemli soğutuculardandır. Sıvı hidrojenden üç kat, sıvı helyumdan ise kırk kat fazla soğutma kapasitesi vardır.</TT>
-    <br>
-  </div>
-
-  <center>
-    <button style="height: 100px; width: 300px;" onclick="speakText()">Dinlemek için bas</button>
-    <br>
-    <p id="voiceCommandInfo" style="color: white;">Sesli komut için: "Oku" veya "Dinle" deyin.</p>
-  </center>
-
-  <script>
-    function speakText() {
-        const content = document.getElementById('content').textContent;
-        const speech = new SpeechSynthesisUtterance();
-
-        speech.text = content;
-        speech.lang = 'tr-TR'; // Turkish (Turkey)
-
-        // Adjust the speech rate dynamically based on text length
-        if (content.length < 2) {
-            speech.rate = 1.0; // Faster rate for short text
-        } else {
-            speech.rate = 0.9; // Slower rate for longer text
+                    // Şu an QR kodu okunduğunu varsayalım ve belirli bir siteye yönlendirelim.
+                    window.location.href = "https://qr1.be/OUYD";
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
-        // Fetch available voices
-        let voices = window.speechSynthesis.getVoices();
+        // Site içeriğini sesli olarak okuyacak fonksiyon
+        function speakText() {
+            const content = document.body.textContent;
+            const speech = new SpeechSynthesisUtterance();
 
-        // Filter for Turkish female voice if available
-        let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'male');
+            speech.text = content;
+            speech.lang = 'tr-TR'; // Türkçe (Türkiye)
 
-        // If a female Turkish voice is found, use it, else use the default voice
-        speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
+            // İsteğe bağlı olarak hızı ayarlayabilirsiniz
+            // speech.rate = 1.0; // Normal hız
 
-        window.speechSynthesis.speak(speech);
-    }
+            // Sesli okuma işlemini başlat
+            window.speechSynthesis.speak(speech);
+        }
 
-    window.onload = function () {
-        // Kontrol etmek için tarayıcının URL'sini al
-        const currentURL = window.location.href;
-
-        // Eğer tarayıcı URL'si belirli bir URL ile eşleşiyorsa speakText() fonksiyonunu çağır
-        if (currentURL === 'https://qr1.be/OUYD') {
+        // QR kodu tarandığında çalışacak olan fonksiyon
+        function onQRCodeScanned() {
+            // QR kodu tarandığında, sesli okuma fonksiyonunu çağır
             speakText();
         }
 
-        // Sesli komutları kontrol et
-        const voiceCommandInfo = document.getElementById('voiceCommandInfo');
-        const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
-        recognition.lang = 'tr-TR'; // Türkçe tanıma için
-
-        recognition.onresult = function(event) {
-            const command = event.results[0][0].transcript.toLowerCase();
-            if (command === 'oku' || command === 'dinle') {
-                speakText();
-            }
-        };
-
-        voiceCommandInfo.addEventListener('click', function() {
-            recognition.start();
+        // QR kodu tarayıcı alanına tıklanınca dosya seçimini başlat
+        document.getElementById('qrInput').addEventListener('click', function () {
+            this.value = null; // Aynı dosyayı tekrar seçmek için gerekiyorsa
         });
-    };
-  </script>
 
+        // Dosya seçimi yapıldığında QR kodu tarayacak fonksiyonu çağır
+        document.getElementById('qrInput').addEventListener('change', function () {
+            readQRCode(this);
+        });
+
+        // QR kodu tarandığında çalışacak fonksiyonu çağır
+        onQRCodeScanned();
+    </script>
 </body>
 </html>
