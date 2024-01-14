@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +38,8 @@
   </div>
 
   <script>
-    async function speakText(content) {
+    async function speakText() {
+        const content = document.getElementById('content').textContent;
         const speech = new SpeechSynthesisUtterance();
         speech.text = content;
         speech.lang = 'tr-TR';
@@ -56,8 +57,8 @@
         window.speechSynthesis.speak(speech);
     }
 
-    // Sayfa yüklendikten sonra QR kodu tarandığını simüle etmek için speakText fonksiyonunu çağırın
-    speakText(document.getElementById('content').textContent);
+    // Sayfa yüklendikten sonra sesli okumayı başlat
+    speakText();
   </script>
 
 </body>
