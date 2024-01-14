@@ -5,36 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neon | Periyodik Tablo</title>
   <style>
-    div.periodic {
+    body {
+      background-color: #272423;
+      color: white;
       text-align: center;
+    }
+
+    #content {
+      margin: 20px;
+    }
+
+    #content img {
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
-<body style="background-color:#272423;">
+<body>
 
-  <div class="periodic" id="content">
-    <TT style="color:white;font-size:25px;">Neon(Ne)</TT>
-    <br><br>
+  <div id="content">
+    <h1>Neon (Ne)</h1>
     <img src="img/Ne.png" alt="Ne(Neon)">
-    <br><br>
-    <TT style="color:white;font-size:20px;">Neon, periyodik tablonun 2. periyodunun 18. grubunda yer alan bir elementtir. Neonun atom numarası 10'dur. Neon, Ne sembolü ile gösterilir ve soy gazdır.</TT>
-    <TT style="color:white;font-size:30px;">Neonun Tarihçesi ve Kullanım Alanları </TT>
-    <br>
-    <br>
-    <TT style="color:white;font-size:30px;">Adını Yunancada “yeni” anlamına gelen neos kelimesinden alır. 1898’de Sir William Ramsay ve Morris Travers tarafından keşfedildi.
-
-        Doğada atmosferde ve kayaçların içinde hapsolmuş şekilde bulunur. Kararlı bir bileşiği yoktur.
-        
-        Kütle numaraları 21, 22 ve 23 olan üç doğal izotopu bulunur. Neon birden fazla izotopunun kararlı olduğu anlaşılan ilk elementtir.
-        
-        Zehirli değildir.
-        
-        En yaygın kullanımı reklam panolarındaki “neon ışıkları” şeklindedir. Vakumlanmış bir tüpe doldurulan neon kırmızımsı turuncu renkte ışık yayar. Yalnızca kırmızı renkli pano ışıklarında saf neon bulunur.
-        
-        Yıldırımsavarlarda, dalış ekipmanlarında ve lazerlerde kullanılır.
-        
-        Sıvı neon önemli soğutuculardandır. Sıvı hidrojenden üç kat, sıvı helyumdan ise kırk kat fazla soğutma kapasitesi vardır.</TT>
-    <br>
+    <p>Neon, periyodik tablonun 2. periyodunun 18. grubunda yer alan bir elementtir. Neonun atom numarası 10'dur. Neon, Ne sembolü ile gösterilir ve soy gazdır.</p>
+    <h2>Neonun Tarihçesi ve Kullanım Alanları</h2>
+    <p>Adını Yunancada “yeni” anlamına gelen neos kelimesinden alır. 1898’de Sir William Ramsay ve Morris Travers tarafından keşfedildi.</p>
+    <p>Doğada atmosferde ve kayaçların içinde hapsolmuş şekilde bulunur. Kararlı bir bileşiği yoktur.</p>
+    <p>Kütle numaraları 21, 22 ve 23 olan üç doğal izotopu bulunur. Neon birden fazla izotopunun kararlı olduğu anlaşılan ilk elementtir.</p>
+    <p>Zehirli değildir.</p>
+    <p>En yaygın kullanımı reklam panolarındaki “neon ışıkları” şeklindedir. Vakumlanmış bir tüpe doldurulan neon kırmızımsı turuncu renkte ışık yayar. Yalnızca kırmızı renkli pano ışıklarında saf neon bulunur.</p>
+    <p>Yıldırımsavarlarda, dalış ekipmanlarında ve lazerlerde kullanılır.</p>
+    <p>Sıvı neon önemli soğutuculardandır. Sıvı hidrojenden üç kat, sıvı helyumdan ise kırk kat fazla soğutma kapasitesi vardır.</p>
   </div>
 
   <script>
@@ -55,14 +55,6 @@
 
         window.speechSynthesis.speak(speech);
     }
-
-    window.onload = function() {
-        // QR kodu tarandığını simüle etmek için varsayılan bir QR kodu URL'si
-        const qrCodeData = 'https://qrco.de/behvPL';
-
-        // QR kodunun taranmış olduğunu varsayalım ve ardından siteye yönlendirelim
-        window.location.href = qrCodeData;
-    };
 
     // Sayfa yüklendikten sonra QR kodu tarandığını simüle etmek için speakText fonksiyonunu çağırın
     speakText(document.getElementById('content').textContent);
