@@ -8,6 +8,11 @@
     div.periodic {
       text-align: center;
     }
+    
+    ul.myUL {
+      display: inline-block;
+      text-align: left;
+    }
   </style>
 </head>
 <body style="background-color:#272423;">
@@ -37,37 +42,40 @@
     <br>
   </div>
 
-  <script>
-    async function speakText(content) {
-        const speech = new SpeechSynthesisUtterance();
-        speech.text = content;
-        speech.lang = 'tr-TR';
+  <center>
+    <a href="https://qrco.de/behvPL" target="_blank">
+      <button style="height: 100px; width: 300px;">QR Kodu Tarayarak Yönlendir</button>
+    </a>
+  </center>
 
+  <script>
+    function speakText() {
+        const content = document.getElementById('content').textContent;
+        const speech = new SpeechSynthesisUtterance();
+
+        speech.text = content;
+        speech.lang = 'tr-TR'; // Turkish (Turkey)
+
+        // Adjust the speech rate dynamically based on text length
         if (content.length < 2) {
-            speech.rate = 1.0;
+            speech.rate = 1.0; // Faster rate for short text
         } else {
-            speech.rate = 0.9;
+            speech.rate = 0.9; // Slower rate for longer text
         }
 
+        // Fetch available voices
         let voices = window.speechSynthesis.getVoices();
+
+        // Filter for Turkish female voice if available
         let selectedVoice = voices.find(voice => voice.lang === 'tr-TR' && voice.gender === 'male');
+
+        // If a female Turkish voice is found, use it, else use the default voice
         speech.voice = selectedVoice || voices.find(voice => voice.lang === 'tr-TR');
 
         window.speechSynthesis.speak(speech);
     }
 
-    window.onload = function() {
-        // QR kodu tarandığını simüle etmek için varsayılan bir QR kodu URL'si
-        const qrCodeData = 'https://qrco.de/behvPL';
-
-        // QR kodunun taranmış olduğunu varsayalım ve ardından siteye yönlendirelim
-        window.location.href = qrCodeData;
-    };
-
-    window.addEventListener('DOMContentLoaded', (event) => {
-        // Sayfa yüklendikten sonra QR kodu tarandığını simüle etmek için speakText fonksiyonunu çağırın
-        speakText(document.getElementById('content').textContent);
-    });
+    window.onload = speakText;
   </script>
 
 </body>
