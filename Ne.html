@@ -43,7 +43,9 @@
   </div>
 
   <center>
-    <button style="height: 100px; width: 300px;" onclick="speakText()">Dinlemek için bas</button>
+    <a href="https://qrco.de/behvPL" target="_blank">
+      <button style="height: 100px; width: 300px;">QR Kodu Tarayarak Yönlendir</button>
+    </a>
   </center>
 
   <script>
@@ -73,15 +75,7 @@
         window.speechSynthesis.speak(speech);
     }
 
-    window.onload = function () {
-        // Kontrol etmek için tarayıcının URL'sini al
-        const currentURL = window.location.href;
-
-        // Eğer tarayıcı URL'si belirli bir URL ile eşleşiyorsa speakText() fonksiyonunu çağır
-        if (currentURL === 'https://qr1.be/OUYD') {
-            speakText();
-        }
-    };
+    window.onload = speakText;
   </script>
 
 </body>
